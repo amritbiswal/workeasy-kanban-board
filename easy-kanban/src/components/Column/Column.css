@@ -1,0 +1,105 @@
+.column {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 320px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 180px);
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.column-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-count {
+  background: #e2e8f0;
+  color: #475569;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.btn-add-task {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 2px dashed #cbd5e1;
+  background: white;
+  color: #64748b;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-add-task:hover {
+  border-color: #667eea;
+  color: #667eea;
+  background: #f0f4ff;
+}
+
+.column-content {
+  flex: 1;
+  padding-right: 4px;
+}
+
+.column-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.column-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.column-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.column-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.empty-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: #94a3b8;
+  background: white;
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+.empty-column p {
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+}
+
+.empty-column span {
+  font-size: 0.875rem;
+}
