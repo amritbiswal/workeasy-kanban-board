@@ -27,7 +27,7 @@ function Kanban() {
 
   const getTasksByStatus = (status: string) => {
     const filteredTasks = tasks.filter((task) => task.status === status);
-    
+
     // Apply priority filters
     if (activeFilter === "highPriority") {
       return filteredTasks.filter((task) => task.priority === "High");
@@ -38,7 +38,7 @@ function Kanban() {
     if (activeFilter === "lowPriority") {
       return filteredTasks.filter((task) => task.priority === "Low");
     }
-    
+
     return filteredTasks;
   };
 
@@ -108,6 +108,13 @@ function Kanban() {
     }
   };
 
+  const handleReorderTasks = (status: string, reorderedTasks: Task[]) => {
+    setTasks((prevTasks) => {
+      const otherTasks = prevTasks.filter((task) => task.status !== status);
+      return [...otherTasks, ...reorderedTasks];
+    });
+  };
+
   const stats = {
     total: tasks.length,
     todo: getFilteredTasksByStatus("To Do").length,
@@ -125,7 +132,7 @@ function Kanban() {
         <div className="header-top">
           <h1>Project Board</h1>
           {activeFilter && (
-            <button 
+            <button
               className="clear-filter-btn"
               onClick={() => setActiveFilter(null)}
             >
@@ -133,45 +140,55 @@ function Kanban() {
             </button>
           )}
         </div>
-        
+
         {/* Status Stats */}
         <div className="stats-section">
           <h3 className="stats-title">Status Overview</h3>
           <div className="kanban-stats">
-            <div 
-              className={`stat-item ${activeFilter === "total" ? "stat-active" : ""}`}
+            <div
+              className={`stat-item ${
+                activeFilter === "total" ? "stat-active" : ""
+              }`}
               onClick={() => handleStatClick("total")}
               title="Click to view all tasks"
             >
               <span className="stat-label">Total Tasks</span>
               <span className="stat-value">{stats.total}</span>
             </div>
-            <div 
-              className={`stat-item ${activeFilter === "todo" ? "stat-active" : ""}`}
+            <div
+              className={`stat-item ${
+                activeFilter === "todo" ? "stat-active" : ""
+              }`}
               onClick={() => handleStatClick("todo")}
               title="Click to filter To Do tasks"
             >
               <span className="stat-label">To Do</span>
               <span className="stat-value">{stats.todo}</span>
             </div>
-            <div 
-              className={`stat-item ${activeFilter === "inProgress" ? "stat-active" : ""}`}
+            <div
+              className={`stat-item ${
+                activeFilter === "inProgress" ? "stat-active" : ""
+              }`}
               onClick={() => handleStatClick("inProgress")}
               title="Click to filter In Progress tasks"
             >
               <span className="stat-label">In Progress</span>
               <span className="stat-value">{stats.inProgress}</span>
             </div>
-            <div 
-              className={`stat-item ${activeFilter === "review" ? "stat-active" : ""}`}
+            <div
+              className={`stat-item ${
+                activeFilter === "review" ? "stat-active" : ""
+              }`}
               onClick={() => handleStatClick("review")}
               title="Click to filter In Review tasks"
             >
               <span className="stat-label">In Review</span>
               <span className="stat-value">{stats.review}</span>
             </div>
-            <div 
-              className={`stat-item ${activeFilter === "done" ? "stat-active" : ""}`}
+            <div
+              className={`stat-item ${
+                activeFilter === "done" ? "stat-active" : ""
+              }`}
               onClick={() => handleStatClick("done")}
               title="Click to filter completed tasks"
             >
@@ -185,24 +202,30 @@ function Kanban() {
         <div className="stats-section">
           <h3 className="stats-title">Priority Levels</h3>
           <div className="kanban-stats">
-            <div 
-              className={`stat-item stat-priority-high ${activeFilter === "highPriority" ? "stat-active" : ""}`}
+            <div
+              className={`stat-item stat-priority-high ${
+                activeFilter === "highPriority" ? "stat-active" : ""
+              }`}
               onClick={() => handleStatClick("highPriority")}
               title="Click to filter high priority tasks"
             >
               <span className="stat-label">High Priority</span>
               <span className="stat-value">{stats.highPriority}</span>
             </div>
-            <div 
-              className={`stat-item stat-priority-medium ${activeFilter === "mediumPriority" ? "stat-active" : ""}`}
+            <div
+              className={`stat-item stat-priority-medium ${
+                activeFilter === "mediumPriority" ? "stat-active" : ""
+              }`}
               onClick={() => handleStatClick("mediumPriority")}
               title="Click to filter medium priority tasks"
             >
               <span className="stat-label">Medium Priority</span>
               <span className="stat-value">{stats.mediumPriority}</span>
             </div>
-            <div 
-              className={`stat-item stat-priority-low ${activeFilter === "lowPriority" ? "stat-active" : ""}`}
+            <div
+              className={`stat-item stat-priority-low ${
+                activeFilter === "lowPriority" ? "stat-active" : ""
+              }`}
               onClick={() => handleStatClick("lowPriority")}
               title="Click to filter low priority tasks"
             >
@@ -216,12 +239,12 @@ function Kanban() {
       <div className="kanban-board">
         {columns
           .filter((column) => {
-            // Hide columns based on status filter
             if (activeFilter === "todo") return column.status === "To Do";
-            if (activeFilter === "inProgress") return column.status === "In Progress";
+            if (activeFilter === "inProgress")
+              return column.status === "In Progress";
             if (activeFilter === "review") return column.status === "In Review";
             if (activeFilter === "done") return column.status === "Done";
-            return true; // Show all columns for "total" and priority filters
+            return true;
           })
           .map((column) => (
             <Column
@@ -234,6 +257,7 @@ function Kanban() {
               onDeleteTask={handleDeleteTask}
               onDrop={handleDrop}
               onDragStart={handleDragStart}
+              onReorderTasks={handleReorderTasks}
             />
           ))}
       </div>

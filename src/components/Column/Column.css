@@ -60,6 +60,7 @@
 
 .column-content {
   flex: 1;
+  overflow-y: auto;
   padding-right: 4px;
 }
 
@@ -80,6 +81,39 @@
   background: #94a3b8;
 }
 
+.task-wrapper {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.task-wrapper.drag-over {
+  margin-top: 40px;
+}
+
+.task-wrapper.drag-over::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #667eea;
+  border-radius: 2px;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scaleY(1.5);
+  }
+}
+
 .empty-column {
   display: flex;
   flex-direction: column;
@@ -91,7 +125,7 @@
   background: white;
   border: 2px dashed #e2e8f0;
   border-radius: 12px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .empty-column p {
